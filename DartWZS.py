@@ -54,15 +54,16 @@ class _DartWZS:
         print "CMD_Read %d"%self._serial.write(CMD_Read)
 
     def ReadOnce(self):
+        hcho = -0.1;
         try:
             data = self._serial.read(9)
         except:
             print "Read data timeout."
-            return
+            return hcho
 
         if len(data) < 9:
             print "only read %d data"%len(data)
-            return
+            return hcho
 
         if 0x78 == ord(data[1]):
             if 0x40 == ord(data[2]):
@@ -71,32 +72,10 @@ class _DartWZS:
                 self._mode = DartMode.Manual
             print "Current mode is " + str(self._mode)
         elif 0x17 == ord(data[1]):
-            print str(ord(data[4])*255+ord(data[5])) + "ppb"
+            hcho = (ord(data[4])*255+ord(data[5])) * 1.2258 / 1000
         elif 0x86 == ord(data[1]):
-            print str(ord(data[2])*255+ord(data[3])) + "ug/m3"
-            print str(ord(data[6])*255+ord(data[7])) + "ppb"
-        return 1
+            hcho = float(ord(data[2])*255 + ord(data[3])) / 1000
+        return hcho
 
 
 wzs = _DartWZS()
-
-""" Sample:
-wzs.initialize()
-wzs.ReadOnce()
-
-wzs.SwitchMode(DartMode.Auto)
-wzs.ReadOnce()
-wzs.ReadOnce()
-
-wzs.SwitchMode(DartMode.Manual)
-wzs.ReadOnce()
-wzs.SendReadCMD()
-wzs.ReadOnce()
-
-time.sleep(1)
-
-wzs.SendReadCMD()
-wzs.ReadOnce()
-
-wzs.deinitialize()
-"""
