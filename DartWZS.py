@@ -64,6 +64,11 @@ class _DartWZS:
         if len(data) < 9:
             print "only read %d data"%len(data)
             return hcho
+        """
+        for i in data:
+            print('%#x'%ord(i))
+        print '---------------------------------'
+        """
 
         if 0x78 == ord(data[1]):
             if 0x40 == ord(data[2]):

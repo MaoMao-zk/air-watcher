@@ -5,5 +5,10 @@ WRITE_KEY = 'KZ34WHKW50OY83HS'
 
 def send_hcho(hcho):
     data = urllib.urlencode({'api_key' : WRITE_KEY, 'field1' : hcho})
-    response = urllib2.urlopen(url=BASE_URL, data=data)
+    try:
+        response = urllib2.urlopen(url=BASE_URL, data=data, timeout=10)
+    except Exception as ex:
+        print ex
+        return
+
     print response.read()
