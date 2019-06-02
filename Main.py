@@ -3,6 +3,8 @@ import time
 from DartWZS import wzs, DartMode
 from sense_hat import SenseHat
 
+time.sleep(10)
+
 sense = SenseHat()
 
 wzs.initialize()
@@ -22,6 +24,7 @@ while 1:
         hcho = wzs.ReadOnce()
         if hcho < 0:
             print "fail to get HCHO"
+            continue
         print 'Get HCHO = %f'%hcho
 
         # Get Temperature & Humidity
@@ -35,8 +38,9 @@ while 1:
         print 'Data sent.'
     except Exception as ex:
         print ex
+        continue
     finally:
-        time.sleep(600)
+        time.sleep(30*60)
 
 
 wzs.deinitialize()
