@@ -89,8 +89,9 @@ class _SGP30(threading.Thread):
             return -1
         return self._sgp30.TVOC
 
-""" Sample
 my_sgp30 = _SGP30()
+
+""" Sample
 my_sgp30.initialize()
 print("initialized")
 
