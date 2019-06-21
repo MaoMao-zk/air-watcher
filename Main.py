@@ -27,7 +27,7 @@ def pushed_up(event):
         print ('Get HCHO = %f'%hcho)
         sense.show_message('HCHO = %.3f mg/m^3'%hcho)
 
-# Show TVOC when press UP
+# Show TVOC when press DOWN
 def pushed_down(event):
     if event.action != ACTION_RELEASED:
         tvoc = my_sgp30.read_TVOC()
