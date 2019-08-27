@@ -7,3 +7,5 @@
 ## Configuration
 * Serial Port
   > Enable "Serial Port", Disable "Serial Console"
+* I2C Port
+  > Enable "I2C Port"
