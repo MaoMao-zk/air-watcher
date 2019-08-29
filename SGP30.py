@@ -32,9 +32,14 @@ class _SGP30(threading.Thread):
         except:
             # dir might not exsit
             os.mkdir(data_dir)
-        
+
         # 2. Open data file and read data
-        self._data_file = open(data_file, mode="r+")
+        if False == os.path.exists(data_file):
+            self._data_file = open(data_file, mode="w+")
+        else:
+            self._data_file = open(data_file, mode="r+")
+        self._data_file.seek(0)
+
         line = self._data_file.readline()
         print("Readline -> " + line)
         if line != "":
@@ -100,3 +105,4 @@ time.sleep(50)
 my_sgp30.deinitialize()
 print("deinitialized")
 """
+
