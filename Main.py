@@ -4,9 +4,15 @@ from DartWZS import wzs, DartMode
 from sense_hat import SenseHat, ACTION_RELEASED
 from SGP30 import my_sgp30
 
-my_sgp30.initialize()
+SGP30_inited = False
 
-time.sleep(20)
+try:
+    SGP30_inited = my_sgp30.initialize()
+    time.sleep(20)
+except:
+    print ('SGP30 initialize fail.')
+    SGP30_inited = False
+
 
 sense = SenseHat()
 
@@ -57,8 +63,11 @@ while 1:
         print ('Get temperature = {}, humidity = {}, pressure = {}'.format(temperature, humidity, pressure))
 
         # Get TVOC
-        tvoc = my_sgp30.read_TVOC()
-        print ('Get TVOC = %dppb'%tvoc)
+        if SGP30_inited:
+            tvoc = my_sgp30.read_TVOC()
+            print ('Get TVOC = %dppb'%tvoc)
+        else:
+            tvoc = None
 
         # Send data to server
         SendData.send_air_data(HCHO = hcho, Temperature = temperature, Humidity = humidity, TVOC = tvoc)
@@ -67,7 +76,7 @@ while 1:
         print (ex)
         continue
     finally:
-        time.sleep(30*60)
+        time.sleep(20*60)
 
 
 wzs.deinitialize()

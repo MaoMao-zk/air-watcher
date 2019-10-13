@@ -85,6 +85,7 @@ class _SGP30(threading.Thread):
                     self._times += 10
                 self._data_file.seek(0)
                 self._data_file.write(str(self._times) + ',' + str(self._sgp30.baseline_eCO2) + ',' + str(self._sgp30.baseline_TVOC) + '\n')
+                self._data_file.write("TVOC: " + str(self._sgp30.TVOC) + 'ppb\n')
                 self._data_file.flush()
             
             time.sleep(1)
